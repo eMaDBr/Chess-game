@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Chess Game</title>
+  <link rel="stylesheet" href="https://unpkg.com/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+  <style>
+    body { text-align: center; font-family: Arial; }
+    #board { width: 400px; margin: auto; }
+  </style>
+</head>
+<body>
+
+<h1>Play Chess ♟️</h1>
+<div id="board"></div>
+<p id="status"></p>
+
+<script src="https://unpkg.com/chess.js@1.0.0/chess.min.js"></script>
+<script src="https://unpkg.com/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+
+<script>
+  const game = new Chess();
+  const board = Chessboard('board', {
+    draggable: true,
+    position: 'start',
+    onDrop: onDrop
+  });
+
+  function onDrop(source, target) {
+    const move = game.move({
+      from: source,
+      to: target,
+      promotion: 'q'
+    });
+    if (move === null) return 'snapback';
+    updateStatus();
+  }
+
+  function updateStatus() {
+    let status = '';
+    if (game.in_checkmate()) status = 'Checkmate!';
+    else if (game.in_check()) status = 'Check!';
+    else status = game.turn() === 'w' ? 'White turn' : 'Black turn';
+    document.getElementById("status").innerText = status;
+  }
+
+  updateStatus();
+</script>
+
+</body>
+</html>
