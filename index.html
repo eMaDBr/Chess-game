@@ -1,14 +1,17 @@
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My Chess Game</title>
+  <title>Play Chess</title>
   <link rel="stylesheet" href="https://unpkg.com/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
   <style>
-    body { text-align: center; font-family: Arial; }
-    #board { width: 400px; margin: auto; }
+    body {
+      text-align: center;
+      font-family: Arial;
+    }
+    #board {
+      width: 350px;
+      margin: 20px auto;
+    }
   </style>
 </head>
 <body>
@@ -23,6 +26,7 @@
 
 <script>
   const game = new Chess();
+
   const board = Chessboard('board', {
     draggable: true,
     position: 'start',
@@ -35,6 +39,7 @@
       to: target,
       promotion: 'q'
     });
+
     if (move === null) return 'snapback';
     updateStatus();
   }
