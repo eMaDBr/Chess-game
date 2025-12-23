@@ -1,40 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
-  <title>Play Chess</title>
+  <meta charset="UTF-8">
+  <title>لعبة الشطرنج</title>
+
   <link rel="stylesheet" href="https://unpkg.com/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+
   <style>
     body {
       text-align: center;
-      font-family: Arial;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      direction: rtl;
     }
     #board {
-      width: 350px;
+      width: 320px;
       margin: 20px auto;
+    }
+    h1, #status {
+      text-align: center;
     }
   </style>
 </head>
+
 <body>
 
-<h1>Play Chess ♟️</h1>
+<h1>لعبة الشطرنج ♟️</h1>
 <div id="board"></div>
-<p id="status"></p>
+<p id="status">دور الأبيض</p>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://unpkg.com/chess.js@1.0.0/chess.min.js"></script>
 <script src="https://unpkg.com/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
 
 <script>
-  const game = new Chess();
+  var game = new Chess();
 
-  const board = Chessboard('board', {
+  var board = Chessboard('board', {
     draggable: true,
     position: 'start',
+    pieceTheme:
+      'https://unpkg.com/chessboardjs@1.0.0/dist/img/chesspieces/wikipedia/{piece}.png',
     onDrop: onDrop
   });
 
   function onDrop(source, target) {
-    const move = game.move({
+    var move = game.move({
       from: source,
       to: target,
       promotion: 'q'
@@ -45,11 +56,17 @@
   }
 
   function updateStatus() {
-    let status = '';
-    if (game.in_checkmate()) status = 'Checkmate!';
-    else if (game.in_check()) status = 'Check!';
-    else status = game.turn() === 'w' ? 'White turn' : 'Black turn';
-    document.getElementById("status").innerText = status;
+    var statusText = '';
+
+    if (game.in_checkmate()) {
+      statusText = 'كش مات!';
+    } else if (game.in_check()) {
+      statusText = 'كش!';
+    } else {
+      statusText = game.turn() === 'w' ? 'دور الأبيض' : 'دور الأسود';
+    }
+
+    document.getElementById('status').innerText = statusText;
   }
 
   updateStatus();
